@@ -13,54 +13,77 @@
       <b-spinner label="Yuklanmoqda..."></b-spinner>
       <span class="ms-2">Ma'lumotlar yuklanmoqda...</span>
     </div>
+
     <!-- Buyurtma yo‘q -->
     <div v-else-if="orders.length === 0" class="text-center text-muted py-4">
       Buyurtma yo‘q
     </div>
+
     <!-- Jadval -->
-    <b-table
+    <div
       v-else
-      :items="orders"
-      :fields="fields"
-      bordered
-      striped
-      hover
-      small
-      responsive="sm"
+      class="table-responsive"
+      style="overflow: auto; min-width: 1000px"
     >
-      <!-- Rownum doim center -->
-      <template #cell(rownum)="data">
-        <div class="text-center">
-          {{ data.item.rownum ?? "-" }}
-        </div>
-      </template>
+      <b-table
+        :items="orders"
+        :fields="fields"
+        bordered
+        striped
+        hover
+        small
+      >
+        <!-- Rownum doim center -->
+        <template #cell(rownum)="data">
+          <div class="text-center">
+            {{ data.item.rownum ?? "-" }}
+          </div>
+        </template>
 
-      <!-- Modified_at maxsus -->
-      <template #cell(modified_at)="data">
-        <div :class="data.item.modified_at ? 'text-start' : 'text-center'">
-          {{
-            data.item.modified_at
-              ? new Date(data.item.modified_at).toLocaleString()
-              : "-"
-          }}
-        </div>
-      </template>
+        <!-- Modified_at maxsus -->
+        <template #cell(modified_at)="data">
+          <div :class="data.item.modified_at ? 'text-start' : 'text-center'">
+            {{
+              data.item.modified_at
+                ? new Date(data.item.modified_at).toLocaleString()
+                : "-"
+            }}
+          </div>
+        </template>
 
-      <!-- Qolgan barcha cellar -->
-      <template #cell()="data">
-        <div
-          :class="
-            data.value !== null && data.value !== ''
-              ? 'text-start'
-              : 'text-center'
-          "
-        >
-          {{ data.value !== null && data.value !== "" ? data.value : "-" }}
-        </div>
-      </template>
-    </b-table>
+        <!-- Qolgan barcha cellar -->
+        <template #cell()="data">
+          <div
+            :class="
+              data.value !== null && data.value !== ''
+                ? 'text-start'
+                : 'text-center'
+            "
+          >
+            {{ data.value !== null && data.value !== "" ? data.value : "-" }}
+          </div>
+        </template>
+      </b-table>
+    </div>
   </div>
 </template>
+
+<style scoped>
+/* Kichik ekranlarda ham scrollable qilish va minimal width berish */
+.table-responsive {
+  overflow-x: auto;
+}
+
+.min-w-700px {
+  min-width: 700px; /* siz ustunlar soniga qarab o'zgartiring */
+}
+
+/* Optional: barcha qatorlarni yaxshi ko'rinishini ta'minlash */
+.table-responsive table {
+  table-layout: auto;
+  width: 100%;
+}
+</style>
 
 <script setup>
 import { ref, onMounted } from "vue";
