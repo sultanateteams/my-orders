@@ -13,7 +13,10 @@
       <b-spinner label="Yuklanmoqda..."></b-spinner>
       <span class="ms-2">Ma'lumotlar yuklanmoqda...</span>
     </div>
-
+    <!-- Buyurtma yo‘q -->
+    <div v-else-if="orders.length === 0" class="text-center text-muted py-4">
+      Buyurtma yo‘q
+    </div>
     <!-- Jadval -->
     <b-table
       v-else
